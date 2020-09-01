@@ -14,21 +14,21 @@ from medpy.io import load, save
 
 # local imports.
 print('current loc : ', os.getcwd())
-dir_VoxelMorph = os.path.join(os.getcwd(), 'VoxelMorph')
-dir_voxelmorph = os.path.join(dir_VoxelMorph, 'voxelmorph') #this dir_voxelmorph is diff from dir_VoxelMorph
+dir_Reg3D = os.getcwd()
+dir_voxelmorph = os.path.join(dir_Reg3D, 'voxelmorph') #this dir_voxelmorph is diff from dir_VoxelMorph
 
-sys.path.append(os.path.join(dir_VoxelMorph, 'voxelmorph','ext','pynd-lib'))
-sys.path.append(os.path.join(dir_VoxelMorph, 'voxelmorph','ext','pytools-lib'))
-sys.path.append(os.path.join(dir_VoxelMorph, 'voxelmorph','ext','neuron'))
-sys.path.append(os.path.join(dir_VoxelMorph, 'voxelmorph'))
-sys.path.append(os.path.join(dir_VoxelMorph, 'YoonGuu'))
-sys.path.append(os.path.join(dir_VoxelMorph))
+sys.path.append(os.path.join(dir_Reg3D, 'voxelmorph','ext','pynd-lib'))
+sys.path.append(os.path.join(dir_Reg3D, 'voxelmorph','ext','pytools-lib'))
+sys.path.append(os.path.join(dir_Reg3D, 'voxelmorph','ext','neuron'))
+sys.path.append(os.path.join(dir_Reg3D, 'voxelmorph'))
+sys.path.append(os.path.join(dir_Reg3D, 'YoonGuu'))
+sys.path.append(os.path.join(dir_Reg3D))
 
 for pth in sys.path:
     print("path : ", pth)
 
-from VoxelMorph.voxelmorph.src import losses
-from VoxelMorph.voxelmorph.src import networks
+from voxelmorph.src import losses
+from voxelmorph.src import networks
 import neuron #import VoxelMorph.voxelmorph.src as vxm
 # import img_dim_ck
 import sel_coordinate
@@ -43,6 +43,10 @@ import Upsampling_YG
 # we've prepared the data in the following files
 # prepared as N x H x W
 core_path = 'F:\MPI dataset\Duc_dataset\check'
+
+#error --even tho I did make BE, I didn't applied on
+# dir_BE_CN_MRA = 'F:\\MPI dataset\\Duc_dataset\\Not_BE_MRA_dim_same'
+# dir_BE_CN_T2 = 'F:\\MPI dataset\\Duc_dataset\\Not_BE_T2_CN_dim_same'
 
 # Brain Extracted one
 dir_BE_CN_MRA = 'F:\\Dataset\\Brain\\Duc_dataset\\BE_MRA_CN'
@@ -59,7 +63,6 @@ print('dic_MRA_list : ', dic_MRA_list)
 
 print('num_T2_dim : ', num_T2_dim)
 print('dic_T2_list : ', dic_T2_list)
-
 
 
 
