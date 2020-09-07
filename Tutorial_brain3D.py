@@ -179,6 +179,27 @@ vxm_model.load_weights(model_2018)
 #ValueError: Error when checking input: expected input_1 to have 5 dimensions, but got array with shape (1, 109, 448, 448, 128, 1)
 #--> 4D
 
+
+'''
+vol_shape = [160, 192, 224]
+ndims = 3
+nb_enc_features = [16, 32, 32, 32]
+nb_dec_features = [32, 32, 32, 32, 32, 16, 16]
+unet = networks.unet_core(vol_shape, nb_enc_features, nb_dec_features);
+
+
+disp_tensor = keras.layers.Conv3D(ndims, kernel_size=3, padding='same', name='disp')(unet.output)
+#disp_tensor --> (?, 160, 192, 224, 3)
+
+
+
+# spatial transfomer
+spatial_transformer = neuron.layers.SpatialTransformer(name='image_warping')
+moved_image_tensor = spatial_transformer([unet.inputs[0], disp_tensor])
+
+vxm_model = keras.models.Model(unet.inputs, [moved_image_tensor, disp_tensor])
+'''
+
 #ValueError: You are trying to load a weight file containing 12 layers into a model with 11 layers.
 val_pred = vxm_model.predict(val_input);
 moved_pred = val_pred[0].squeeze()
