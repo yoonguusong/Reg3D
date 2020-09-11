@@ -68,36 +68,9 @@ print('dic_T2_list : ', dic_T2_list)
 
 
 
-LoadFileName ='brain_3d_200812.h5'
-SaveFileName ='brain_3d_200812.h5'
 
 
 
-
-## for 3D image
-
-vol_shape = [160, 192, 224]
-ndims = 3
-nb_enc_features = [16, 32, 32, 32]
-nb_dec_features = [32, 32, 32, 32, 32, 16, 16]
-unet = networks.unet_core(vol_shape, nb_enc_features, nb_dec_features);
-#unet.input --> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 1)]
-#unet.output --> (?, 160, 192, 224, 16)
-disp_tensor = keras.layers.Conv3D(ndims, kernel_size=3, padding='same', name='disp')(unet.output)
-#disp_tensor --> (?, 160, 192, 224, 3)
-
-
-
-# spatial transfomer
-spatial_transformer = neuron.layers.SpatialTransformer(name='image_warping')
-moved_image_tensor = spatial_transformer([unet.inputs[0], disp_tensor])
-#moved_image_tensor --> (?, 160, 192, 224, 1)
-
-
-# final model
-vxm_model = keras.models.Model(unet.inputs, [moved_image_tensor, disp_tensor])
-# vxm_model.input --> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 1)]
-# vxm_model.output--> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 3)]
 
 
 num_MRA_dim,dic_MRA_list = sel_coordinate.img_dim(dir_BE_CN_MRA)
@@ -165,8 +138,35 @@ val_input = [val_volume_1[np.newaxis, ..., np.newaxis], val_volume_2[np.newaxis,
 print('val_input[0].shape', val_input[0].shape)
 print('val_input[1].shape', val_input[1].shape)
 
-model_2018 = 'E:\\Pycharm\\PycharmProjects\\MPI_projects\\VoxelMorph\\voxelmorph\\models\\cvpr2018_vm2_cc.h5'
+## for 3D image
 
+vol_shape = [160, 192, 224]
+ndims = 3
+nb_enc_features = [16, 32, 32, 32]
+nb_dec_features = [32, 32, 32, 32, 32, 16, 16]
+unet = networks.unet_core(vol_shape, nb_enc_features, nb_dec_features);
+#unet.input --> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 1)]
+#unet.output --> (?, 160, 192, 224, 16)
+disp_tensor = keras.layers.Conv3D(ndims, kernel_size=3, padding='same', name='disp')(unet.output)
+#disp_tensor --> (?, 160, 192, 224, 3)
+
+
+
+# spatial transfomer
+spatial_transformer = neuron.layers.SpatialTransformer(name='image_warping')
+moved_image_tensor = spatial_transformer([unet.inputs[0], disp_tensor])
+#moved_image_tensor --> (?, 160, 192, 224, 1)
+
+
+# final model
+vxm_model = keras.models.Model(unet.inputs, [moved_image_tensor, disp_tensor])
+# vxm_model.input --> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 1)]
+# vxm_model.output--> [(?, 160, 192, 224, 1), (?, 160, 192, 224, 3)]
+
+
+model_2018 = 'E:\\Pycharm\\PycharmProjects\\MPI_projects\\VoxelMorph\\voxelmorph\\models\\cvpr2018_vm2_cc.h5'
+LoadFileName ='brain_3d_200812.h5'
+SaveFileName ='brain_3d_200812.h5'
 # from keras.models import Sequential, load_model
 # load_model1 =load_model(model_2018)
 # load_model1.summary()
