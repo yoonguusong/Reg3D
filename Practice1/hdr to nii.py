@@ -1,3 +1,58 @@
+import nibabel as nb
+import numpy as np
+import os
+import pandas as pd
+import sys
+import SimpleITK as sitk
+
+
+dir_rat = 'F:\\Dataset\\Rat\\Kim hyoungihl lab\\rat data_kim hyung hil\\Rat_upet2nii\\140811_NV_Opto_140708-1'
+list_folder = os.listdir(dir_rat)
+dir_rat_nii_file=os.path.join(dir_rat,'140811_byte.nii')
+img = nb.load(dir_rat_nii_file) #pixdim[1,2,3] should be non-zero; setting 0 dims to 1
+img.shape #(384, 584, 384, 1)
+hdr = img.header #<nibabel.nifti1.Nifti1Header at 0x17aa9e874e0>
+img.get_data_dtype() #dtype('int8')
+data_np =img.get_fdata()
+data_np.shape
+# nb.save(img, fname.replace('.img', '.nii'))
+
+
+
+dir_BE_CN_MRA = 'F:\\Dataset\\Brain\\Duc_dataset\\BE_MRA_CN'
+list_Normal_MRA = os.listdir(dir_BE_CN_MRA)
+dir_BE_nii_file=os.path.join(dir_BE_CN_MRA,'Normal109-MRA.nii.gz')
+img2 = nb.load(dir_BE_nii_file)
+img2.shape  #(352, 448, 176)
+hdr2 = img2.header # <nibabel.nifti1.Nifti1Header at 0x17aa9d47668>
+img2.get_data_dtype() #<f4
+data_BE_np =img2.get_fdata()
+data_BE_np.shape
+
+
+dir_img = "F:\\Dataset\\Rat\\Kim hyoungihl lab\\rat data_kim hyung hil\\140811_NV_Opto_140708-1\\140811_NV_Opto_140708-1_Atn_1500s_Dynamic_em_v1.pet.img.hdr"
+dir_img2 = "C:\\Users\\YoonGuu Song\\Desktop\\Rat_check"
+os.listdir(dir_img2)
+path_img2= os.path.join(dir_img2,'140811_byte.nii')
+
+
+dir_folder = 'F:\\Dataset\\Rat\\Kim hyoungihl lab\\rat data_kim hyung hil'
+list_folder = os.listdir(dir_folder)
+
+for folder in list_folder:
+    dir_folder2 = os.path.join(dir_folder, folder)
+    # print('dir_Normal : ', dir_folder2)
+    list_folder2 = os.listdir(dir_folder2)
+    for folder2 in list_folder2:
+        list
+        dir_folder3 = os.path.join(dir_folder2, folder2)
+        # print('--folder : ', dir_folder3)
+
+    print()
+print()
+
+
+
 import os
 import SimpleITK as sitk
 from skimage import measure, filters, morphology
